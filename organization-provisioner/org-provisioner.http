@@ -1,0 +1,17 @@
+POST http://localhost:8000/provisioner/organizations
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "zone2",
+  "name": "Zone 2 technologies Ltd."
+}
+
+###
+
+DELETE http://localhost:8000/provisioner/organizations/zone2
+
+###
+
+GET http://localhost:8080/admin/serverinfo
+

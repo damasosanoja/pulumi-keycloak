@@ -1,0 +1,27 @@
+version: "3"
+services:
+  keycloak:
+    image: "quay.io/keycloak/keycloak:latest"
+    command:
+      - "start-dev"
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+
+  organization-provisioner:
+    build:
+      context: organization-provisioner/.
+    ports:
+      - "8000:8000"
+    environment:
+      PULUMI_BACKEND_URL: "file:///tmp/pulumi"
+      PULUMI_CONFIG_PASSPHRASE: "some-passphrase"
+      KEYCLOAK_URL: "http://keycloak:8080"
+      KEYCLOAK_CLIENT_ID: "pulumi"
+      KEYCLOAK_CLIENT_SECRET: "uJ5z9Wy4V6u7ZlFDCcmhEzVZAZaBCPAB"
+    volumes:
+        - "$PWD/pulumi/stacks:/tmp"
+        - "$PWD/pulumi/backend:/tmp/pulumi"
+
